@@ -87,11 +87,12 @@ export default class KeyboardSpacer extends Component {
     LayoutAnimation.configureNext(animationConfig);
 
     // get updated on rotation
-    const screenHeight = Dimensions.get('window').height;
+    const { height: screenHeight, width: screenWidth } = Dimensions.get('window');
     // when external physical keyboard is connected
     // event.endCoordinates.height still equals virtual keyboard height
     // however only the keyboard toolbar is showing if there should be one
-    const keyboardSpace = (screenHeight - event.endCoordinates.screenY);
+    const keyboardSpace =
+      (screenHeight > screenWidth ? screenHeight : screenWidth) - event.endCoordinates.screenY;
     this.setState({
       keyboardSpace,
       isKeyboardOpened: true
